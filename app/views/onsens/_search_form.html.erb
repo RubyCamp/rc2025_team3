@@ -12,7 +12,7 @@
                      class: "block text-sm font-bold mb-1" %>
         <%= f.text_field :q, value: params[:q],
                           class: "w-full border rounded px-3 py-2",
-                          placeholder: "例：玉造フォトスポット",
+                          placeholder: "例：多古鼻",
                           'aria-label': t('views.onsens.index.search') %>
         <p class="text-xs text-gray-600 mt-1">フォトスポットや説明文で検索できます</p>
       </div>
@@ -22,7 +22,7 @@
                      class: "block text-sm font-bold mb-1" %>
         <%= f.text_field :tags, value: params[:tags],
                           class: "w-full border rounded px-3 py-2",
-                          placeholder: "例：露天風呂,美肌",
+                          placeholder: "例：海,花",
                           'aria-label': t('activerecord.attributes.onsen.tags') %>
         <p class="text-xs text-gray-600 mt-1">カンマ区切りで複数指定可能</p>
       </div>
