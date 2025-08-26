@@ -100,7 +100,7 @@ ja:
       form:
         submit: レビュー投稿
   admin:
-    onsens:
+    photo_spots:
       create:
         success: "フォトスポットを登録しました"
       update:
