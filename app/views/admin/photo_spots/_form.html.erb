@@ -1,0 +1,49 @@
+<%= form_with(model: [:admin, photo_spot || @photo_spot], html: { multipart: true, class: "space-y-6" }) do |form| %>
+  <% if photo_spot.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
+      <h2><%= pluralize(photo_spot.errors.count, "件のエラー") %>があります:</h2>
+      <ul class="list-disc ml-6">
+        <% photo_spot.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div>
+    <%= form.label :name, '名称', class: 'block font-semibold mb-1' %>
+    <%= form.text_field :name, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
+  </div>
+  <div class="flex flex-col sm:flex-row gap-4">
+    <div class="flex-1">
+      <%= form.label :geo_lat, '住所', class: 'block font-semibold mb-1' %>
+      <%= form.text_field :geo_lat, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
+    </div>
+  </div>
+  <div>
+    <%= form.label :description, '説明', class: 'block font-semibold mb-1' %>
+    <%= form.text_area :description, rows: 4, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
+  </div>
+  <div>
+    <%= form.label :tags, 'タグ（カンマ区切り）', class: 'block font-semibold mb-1' %>
+    <%= form.text_field :tags, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
+  </div>
+  <div>
+    <%= form.label :images, '画像（最大5枚・JPEG/PNG/GIF）', class: 'block font-semibold mb-1' %>
+    <%= form.file_field :images, multiple: true, accept: 'image/jpeg,image/png,image/gif', class: "block border rounded px-2 py-1 w-full" %>
+    <% if photo_spot.images.attached? %>
+      <div class="flex flex-wrap gap-2 mt-2">
+        <% photo_spot.images.each_with_index do |img, idx| %>
+          <div class="relative group">
+            <%= image_tag img.variant(resize_to_limit: [100,100]), class: "rounded shadow border w-24 h-24 object-cover", alt: photo_spot.name %>
+            <label class="block text-xs text-center mt-1">
+              <%= check_box_tag "photo_spot[remove_image_ids][]", img.id, false %> 削除
+            </label>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div class="flex flex-col sm:flex-row gap-2">
+    <%= form.submit class: "rounded-md px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold w-full sm:w-auto" %>
+  </div>
+<% end %>

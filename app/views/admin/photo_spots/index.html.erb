@@ -1,8 +1,36 @@
-<h1>フォトスポット一覧です</h1>
-<ul>
-  <% @photo_spots.each do |photo_spot|%>
-    <li>
-      <%= photo_spot.name %>
-    </li>
+<% content_for :title, t('admin.photo_spots.index.title', default: 'フォトスポット一覧') %>
+<div class="w-full max-w-5xl mx-auto py-8 px-2 sm:px-4">
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-600 font-medium rounded-md text-center" id="notice"><%= notice %></p>
   <% end %>
-</ul>
+  <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+    <h1 class="font-bold text-3xl text-gray-800"><%= t('admin.photo_spots.index.title', default: 'フォトスポット一覧') %></h1>
+    <%= link_to t('admin.photo_spots.index.new', default: '新規フォトスポット登録'), new_admin_photo_spot_path, class: "rounded-md px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold shadow w-full md:w-auto text-center" %>
+  </div>
+  <div id="admin_photo_spots" class="divide-y divide-gray-200 w-full overflow-x-auto">
+    <% if @photo_spots.any? %>
+      <% @photo_spots.each do |photo_spot| %>
+        <div class="flex flex-col md:flex-row justify-between items-center py-6 gap-4 w-full">
+          <div class="flex-1 min-w-0">
+            <%= render partial: 'photo_spot', locals: { photo_spot: photo_spot } %>
+            <!-- 画像サムネイル -->
+            <% if photo_spot.images.attached? %>
+              <div class="flex flex-wrap gap-2 mt-2">
+                <% photo_spot.images.each do |img| %>
+                  <%= image_tag img.variant(resize_to_limit: [80,80]), class: "rounded shadow border w-20 h-20 object-cover", alt: photo_spot.name %>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+          <div class="flex flex-col md:flex-row gap-2 w-full md:w-auto">
+            <%= link_to t('admin.photo_spots.index.show', default: '詳細'), admin_photo_spot_path(photo_spot), class: "rounded-md px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium text-center w-full md:w-auto" %>
+            <%= link_to t('admin.photo_spots.index.edit', default: '編集'), edit_admin_photo_spot_path(photo_spot), class: "rounded-md px-4 py-2 bg-yellow-100 hover:bg-yellow-200 text-yellow-800 font-medium text-center w-full md:w-auto" %>
+            <%= button_to t('admin.photo_spots.index.destroy', default: '削除'), admin_photo_spot_path(photo_spot), method: :delete, class: "rounded-md px-4 py-2 bg-red-600 hover:bg-red-500 text-white font-medium text-center w-full md:w-auto", data: { turbo_confirm: t('admin.photo_spots.index.confirm_destroy', default: '本当に削除しますか？') } %>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="text-center my-10 text-gray-500">フォトスポットデータがありません。</p>
+    <% end %>
+  </div>
+</div>
