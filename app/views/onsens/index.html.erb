@@ -5,7 +5,7 @@
   </h1>
   <%# 検索フォーム（パーシャル分割） %>
   <%= render 'search_form' %>
-  <%# メインコンテンツ：地図 + 温泉一覧 %>
+  <%# メインコンテンツ：地図 + フォトスポット一覧 %>
   <div class="grid lg:grid-cols-2 gap-6 min-h-[600px]">
     <%# 地図エリア（左側・デスクトップ時） %>
     <div class="order-2 lg:order-1">
@@ -18,19 +18,19 @@
         </button>
       </div>
     </div>
-    <%# 温泉一覧エリア（右側・デスクトップ時） %>
+    <%# フォトスポット一覧エリア（右側・デスクトップ時） %>
     <div class="order-1 lg:order-2">
       <div class="space-y-4 lg:max-h-[600px] lg:overflow-y-auto lg:pr-2">
         <% if @onsens.any? %>
           <p class="text-sm text-gray-600 mb-4">
-            検索結果: <%= @onsens.count %>件の温泉が見つかりました
+            検索結果: <%= @onsens.count %>件のフォトスポットが見つかりました
           </p>
           <% @onsens.each do |onsen| %>
             <%= render partial: "spot_card", locals: { onsen: onsen } %>
           <% end %>
         <% else %>
           <div class="text-center py-8 text-gray-500">
-            <p class="text-lg mb-2">🔍 温泉が見つかりませんでした</p>
+            <p class="text-lg mb-2">🔍 フォトスポットが見つかりませんでした</p>
             <p class="text-sm">検索条件を変更してお試しください</p>
           </div>
         <% end %>

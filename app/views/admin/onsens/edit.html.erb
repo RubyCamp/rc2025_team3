@@ -1,9 +1,9 @@
-<% content_for :title, '温泉情報編集' %>
+<% content_for :title, 'フォトスポット情報編集' %>
 <div class="max-w-2xl w-full mx-auto py-8 px-2 sm:px-4">
-  <h1 class="font-bold text-3xl mb-6">温泉情報編集</h1>
+  <h1 class="font-bold text-3xl mb-6">フォトスポット情報編集</h1>
   <%= render "form", onsen: @onsen %>
   <div class="mt-6 flex flex-col sm:flex-row gap-2">
-    <%= link_to 'この温泉を表示', onsen_path(@onsen), target: "_blank", rel: "noopener", class: "rounded-md px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium w-full sm:w-auto text-center" %>
+    <%= link_to 'このフォトスポットを表示', onsen_path(@onsen), target: "_blank", rel: "noopener", class: "rounded-md px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium w-full sm:w-auto text-center" %>
     <%= link_to '一覧に戻る', admin_onsens_path, class: "rounded-md px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium w-full sm:w-auto text-center" %>
   </div>
 </div>

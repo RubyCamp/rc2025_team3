@@ -1,9 +1,9 @@
-<% content_for :title, '温泉詳細' %>
+<% content_for :title, 'フォトスポット詳細' %>
 <div class="max-w-2xl w-full mx-auto py-8">
   <% if notice.present? %>
     <p class="py-2 px-3 bg-green-50 mb-5 text-green-600 font-medium rounded-md text-center" id="notice"><%= notice %></p>
   <% end %>
-  <h1 class="font-bold text-3xl mb-6">温泉詳細</h1>
+  <h1 class="font-bold text-3xl mb-6">フォトスポット詳細</h1>
   <%= render partial: 'onsen', locals: { onsen: @onsen } %>
   <% if @onsen.images.attached? %>
     <div class="flex flex-wrap gap-2 mt-4">

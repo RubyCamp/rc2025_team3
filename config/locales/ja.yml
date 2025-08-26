@@ -1,11 +1,11 @@
 ja:
   activerecord:
     models:
-      onsen: 温泉
+      onsen: フォトスポット
       review: レビュー
     attributes:
       onsen:
-        name: 温泉名
+        name: フォトスポット
         geo_lat: 緯度
         geo_lng: 経度
         description: 説明
@@ -76,15 +76,15 @@ ja:
       update: "%{model}を更新する"
   views:
     navigation:
-      site_title: 松江温泉マップ
+      site_title: 松江フォトスポットマップ
       search: 検索
       admin: 管理画面
-      onsen_management: 温泉管理
+      onsen_management: フォトスポット管理
       public_site: 公開サイト
     onsens:
     onsens:
       index:
-        title: 松江市周辺の温泉一覧
+        title: 松江市周辺のフォトスポット一覧
         search: 検索
         radius_km: 半径(km)
         address: 住所
@@ -102,11 +102,11 @@ ja:
   admin:
     onsens:
       create:
-        success: "温泉を登録しました"
+        success: "フォトスポットを登録しました"
       update:
-        success: "温泉情報を更新しました"
+        success: "フォトスポット情報を更新しました"
       destroy:
-        success: "温泉を削除しました"
+        success: "フォトスポットを削除しました"
       import:
         success: "インポート完了"
         skipped: "インポート完了（%{count}行スキップ）"

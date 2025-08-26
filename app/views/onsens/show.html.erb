@@ -1,12 +1,10 @@
 <% content_for :title, @onsen.name %>
-
 <div class="container mx-auto px-4 py-6">
   <% if notice.present? %>
     <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded mb-6">
       <%= notice %>
     </div>
   <% end %>
-
   <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
     <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-6">
       <div class="flex-1">
@@ -16,7 +14,6 @@
             （<%= @onsen.reviews.count %>件のレビュー）
           </span>
         </h1>
-
         <% if @onsen.tags.present? %>
           <div class="flex flex-wrap gap-2 mb-4">
             <% @onsen.tags.split(',').each do |tag| %>
@@ -27,13 +24,11 @@
           </div>
         <% end %>
       </div>
-
       <div class="flex flex-col sm:flex-row gap-3 mt-4 lg:mt-0">
         <%= link_to "レビューを投稿", new_onsen_review_path(@onsen), 
             class: "inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" %>
       </div>
     </div>
-
     <% if @onsen.images.attached? %>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
         <% @onsen.images.limit(6).each_with_index do |image, index| %>
@@ -52,12 +47,10 @@
         <% end %>
       </div>
     <% end %>
-
     <div class="prose max-w-none mb-6">
       <p class="text-gray-700 leading-relaxed"><%= simple_format(@onsen.description) %></p>
     </div>
   </div>
-
   <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
     <h2 class="text-2xl font-semibold text-gray-900 mb-6 flex items-center">
       <svg class="w-6 h-6 mr-2 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
@@ -65,7 +58,6 @@
       </svg>
       レビュー
     </h2>
-
     <div class="space-y-4">
       <% if @reviews.any? %>
         <% @reviews.each do |review| %>
@@ -86,9 +78,8 @@
       <% end %>
     </div>
   </div>
-
   <div class="mt-6">
-    <%= link_to "温泉一覧に戻る", onsens_path, 
+    <%= link_to "フォトスポット一覧に戻る", onsens_path, 
         class: "inline-flex items-center px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50" %>
   </div>
 </div>
