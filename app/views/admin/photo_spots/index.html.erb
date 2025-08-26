@@ -1,0 +1,8 @@
+<h1>フォトスポット一覧です</h1>
+<ul>
+  <% @photo_spots.each do |photo_spot|%>
+    <li>
+      <%= photo_spot.name %>
+    </li>
+  <% end %>
+</ul>
