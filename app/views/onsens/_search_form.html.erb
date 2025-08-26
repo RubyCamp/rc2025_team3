@@ -1,20 +1,20 @@
-<%# 温泉検索フォーム用パーシャル %>
+<%# フォトスポット検索フォーム用パーシャル %>
 <%# 複合検索機能を提供：テキスト検索 + タグ検索 + 位置情報検索 %>
-<div class="mb-6" role="search" aria-label="温泉検索">
+<div class="mb-6" role="search" aria-label="フォトスポット検索">
   <%= form_with url: onsens_path, method: :get, local: true,
                 class: "space-y-4 p-4 border rounded-lg bg-gray-50",
-                'aria-label': "温泉検索フォーム" do |f| %>
+                'aria-label': "フォトスポット検索フォーム" do |f| %>
     <%# テキスト・タグ検索セクション %>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <%# 温泉名・説明文での検索 %>
+      <%# フォトスポット・説明文での検索 %>
       <div>
         <%= f.label :q, t('activerecord.attributes.onsen.name'),
                      class: "block text-sm font-bold mb-1" %>
         <%= f.text_field :q, value: params[:q],
                           class: "w-full border rounded px-3 py-2",
-                          placeholder: "例：玉造温泉",
+                          placeholder: "例：玉造フォトスポット",
                           'aria-label': t('views.onsens.index.search') %>
-        <p class="text-xs text-gray-600 mt-1">温泉名や説明文で検索できます</p>
+        <p class="text-xs text-gray-600 mt-1">フォトスポットや説明文で検索できます</p>
       </div>
       <%# タグでの絞り込み検索 %>
       <div>

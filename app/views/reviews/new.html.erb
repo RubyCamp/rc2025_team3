@@ -1,12 +1,10 @@
 <% content_for :title, "#{@onsen.name}にレビューを投稿" %>
-
 <div class="container mx-auto px-4 py-6">
   <% if notice.present? %>
     <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded mb-6">
       <%= notice %>
     </div>
   <% end %>
-
   <div class="max-w-2xl mx-auto">
     <%# ヘッダー部分 %>
     <div class="mb-6">
@@ -18,18 +16,15 @@
         <% end %>
         <h1 class="text-2xl font-bold text-gray-900">レビューを投稿</h1>
       </div>
-      
       <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
         <h2 class="text-lg font-semibold text-blue-900 mb-2"><%= @onsen.name %></h2>
-        <p class="text-blue-700 text-sm">この温泉の感想をお聞かせください</p>
+        <p class="text-blue-700 text-sm">このフォトスポットの感想をお聞かせください</p>
       </div>
     </div>
-
     <%# レビューフォーム %>
     <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
       <%= render "form", onsen: @onsen, review: @review %>
     </div>
-
     <%# 注意事項 %>
     <div class="mt-6 bg-gray-50 rounded-lg p-4">
       <h3 class="text-sm font-medium text-gray-900 mb-2">レビュー投稿について</h3>

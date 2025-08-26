@@ -1,5 +1,4 @@
 <%= form_with(model: [onsen, review], local: true, class: "space-y-4") do |f| %>
-
   <%# 評価選択セクション %>
   <div class="<%= review.errors[:rating].any? ? 'border-red-300' : '' %>">
     <label class="block text-sm font-medium text-gray-700 mb-2">
@@ -23,7 +22,6 @@
     <% end %>
     <p class="mt-1 text-sm text-gray-500">1〜5つ星で評価してください</p>
   </div>
-
   <%# コメント入力セクション %>
   <div class="<%= review.errors[:comment].any? ? 'border-red-300' : '' %>">
     <label for="review_comment" class="block text-sm font-medium text-gray-700 mb-2">
@@ -32,13 +30,12 @@
     <%= f.text_area :comment, 
         rows: 3,
         class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500",
-        placeholder: "温泉の雰囲気、泉質、設備など、感じたことを自由にお書きください" %>
+        placeholder: "フォトスポットの雰囲気、泉質、設備など、感じたことを自由にお書きください" %>
     <% if review.errors[:comment].any? %>
       <p class="mt-1 text-sm text-red-600"><%= review.errors[:comment].first %></p>
     <% end %>
-    <p class="mt-1 text-sm text-gray-500">温泉の感想をお聞かせください（500文字以内）</p>
+    <p class="mt-1 text-sm text-gray-500">フォトスポットの感想をお聞かせください（500文字以内）</p>
   </div>
-
   <%# 画像アップロードセクション %>
   <div>
     <label for="review_images" class="block text-sm font-medium text-gray-700 mb-2">
@@ -50,12 +47,10 @@
         class: "w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500" %>
     <p class="mt-1 text-sm text-gray-500">複数の画像を選択できます</p>
   </div>
-
   <%# 送信ボタンエリア %>
   <div class="flex justify-end gap-3 pt-4 border-t border-gray-200">
     <%= link_to "キャンセル", onsen_path(onsen), 
         class: "px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50" %>
-    
     <%= f.submit "レビューを投稿", 
         class: "px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2" %>
   </div>
