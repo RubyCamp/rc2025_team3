@@ -4,8 +4,8 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    root "onsens#index"
-    resources :onsens
+    root "photo_spots#index"
+    resources :photo_spots
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
