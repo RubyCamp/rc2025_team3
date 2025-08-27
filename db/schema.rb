@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_27_051955) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_27_080447) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -52,13 +52,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_051955) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "photo_spot_tags", force: :cascade do |t|
-    t.bigint "photo_spot_id"
-    t.bigint "tag_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "photo_spots", force: :cascade do |t|
     t.string "name"
     t.string "address"
@@ -67,6 +60,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_051955) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "parking_count"
+    t.decimal "latitude", precision: 10, scale: 7
+    t.decimal "longitude", precision: 10, scale: 7
+    t.string "tags"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -78,8 +74,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_27_051955) do
     t.index ["photo_spot_id"], name: "index_reviews_on_photo_spot_id"
   end
 
-  create_table "tags", force: :cascade do |t|
-    t.string "name"
+  create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

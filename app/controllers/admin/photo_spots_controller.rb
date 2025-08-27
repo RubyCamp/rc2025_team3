@@ -32,14 +32,26 @@ class Admin::PhotoSpotsController < ApplicationController
   end
 
   def update
-    respond_to do |format|
-      if @photo_spot.update(photo_spot_params)
-        format.html { redirect_to admin_photo_spot_path(@photo_spot), notice: "PhotoSpot was successfully updated." }
-        format.json { render :show, status: :ok, location: @photo_spot }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @photo_spot.errors, status: :unprocessable_entity }
+    # チェックされた画像を削除
+    if params.dig(:photo_spot, :remove_image_ids)
+      images_to_purge = @photo_spot.images.where(id: params[:photo_spot][:remove_image_ids])
+      images_to_purge.each(&:purge)
+    end
+
+    # 更新用のパラメータを取得し、画像とそれ以外に分離
+    update_params = photo_spot_params.dup
+    new_images = update_params.delete(:images)
+    new_images&.reject!(&:blank?)
+
+    # まず画像以外の属性を更新
+    if @photo_spot.update(update_params)
+      # 新しい画像があれば追加で添付
+      if new_images.present?
+        @photo_spot.images.attach(new_images)
       end
+      redirect_to admin_photo_spot_url(@photo_spot), notice: "Photo spot was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -59,6 +71,8 @@ private
   end
 
   def photo_spot_params
-    params.require(:photo_spot).permit(:name, :address, :detail, :parking_flag, { tag_ids: [] }, images: [])
+
+    params.require(:photo_spot).permit(:name, :address, :detail, :parking_flag, :tags, images: [])
+
   end
 end
