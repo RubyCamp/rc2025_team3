@@ -1,10 +1,10 @@
 ja:
   activerecord:
     models:
-      onsen: フォトスポット
+      photo_spot: フォトスポット
       review: レビュー
     attributes:
-      onsen:
+      photo_spot:
         name: フォトスポット
         geo_lat: 緯度
         geo_lng: 経度
@@ -79,10 +79,10 @@ ja:
       site_title: 松江フォトスポットマップ
       search: 検索
       admin: 管理画面
-      onsen_management: フォトスポット管理
+      photo_spot_management: フォトスポット管理
       public_site: 公開サイト
-    onsens:
-    onsens:
+    photo_spots:
+    photo_spots:
       index:
         title: 松江市周辺のフォトスポット一覧
         search: 検索
