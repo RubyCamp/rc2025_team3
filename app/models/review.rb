@@ -1,5 +1,5 @@
 class Review < ApplicationRecord
-  belongs_to :onsen
+  belongs_to :photo_spot
 
   has_many_attached :images
 
