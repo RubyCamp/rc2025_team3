@@ -24,6 +24,7 @@ class Admin::PhotoSpotsController < ApplicationController
     end
   end
 
+
   def show
   end
 
@@ -33,7 +34,7 @@ class Admin::PhotoSpotsController < ApplicationController
   def update
     respond_to do |format|
       if @photo_spot.update(photo_spot_params)
-        format.html { redirect_to admin_photo_spot_path(@photo_spot), notice: "Onsen was successfully updated." }
+        format.html { redirect_to admin_photo_spot_path(@photo_spot), notice: "PhotoSpot was successfully updated." }
         format.json { render :show, status: :ok, location: @photo_spot }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -43,8 +44,13 @@ class Admin::PhotoSpotsController < ApplicationController
   end
 
   def destroy
-  end
+    @photo_spot.destroy!
 
+    respond_to do |format|
+      format.html { redirect_to admin_photo_spots_path, status: :see_other, notice: "PhotoSpot was successfully destroyed." }
+      format.json { head :no_content }
+    end
+  end
 
 private
 
@@ -53,6 +59,6 @@ private
   end
 
   def photo_spot_params
-    params.require(:photo_spot).permit(:name, :address, :detail, :parking_flag)
+    params.require(:photo_spot).permit(:name, :address, :detail, :parking_flag, { tag_ids: [] }, images: [])
   end
 end
