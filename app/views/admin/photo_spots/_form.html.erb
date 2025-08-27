@@ -33,11 +33,11 @@
     <% end %>
   </div>
   <div>
-    <%= form.label :parking_flag, '温泉の有無', class: 'block font-semibold mb-1' %>
+    <%= form.label :parking_flag, '駐車場の有無', class: 'block font-semibold mb-1' %>
     <%= form.text_field :parking_flag, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
   </div>
   <div>
-    <%= form.label :images, '画像（最大5枚・JPEG/PNG/GIF）', class: 'block font-semibold mb-1' %>
+    <%= form.label :images, '画像（1枚のみ・JPEG/PNG/GIF）', class: 'block font-semibold mb-1' %>
     <%= form.file_field :images, multiple: true, accept: 'image/jpeg,image/png,image/gif', class: "block border rounded px-2 py-1 w-full" %>
     <% if photo_spot.images.attached? %>
       <div class="flex flex-wrap gap-2 mt-2">
