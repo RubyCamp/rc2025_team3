@@ -1,8 +1,51 @@
-<dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-sm text-gray-700 break-words">
-  <dt class="font-semibold">名称</dt>
-  <dd><%= photo_spot.name %></dd>
-  <dt class="font-semibold">説明</dt>
-  <dd><%= photo_spot.detail %></dd>
-  <%# <dt class="font-semibold">タグ</dt> %>
-  <%# <dd><%= photo_spot.tags ></dd> %>
-</dl>
+<div data-controller="image-modal">
+  <div class="flex flex-col md:flex-row gap-4 flex-1 min-w-0 items-start">
+    <%# 画像サムネイル（左側） %>
+    <% if photo_spot.images.attached? %>
+      <div class="flex flex-wrap gap-2 mt-2 md:mt-0 md:flex-shrink-0">
+        <% photo_spot.images.each_with_index do |img, index| %>
+          <div class="cursor-pointer" data-action="click->image-modal#open"
+            data-image-modal-index-value="<%= index %>"
+            data-image-modal-images-value="<%= photo_spot.images.map { |i| url_for(i) }.to_json %>">
+            <%= image_tag img.variant(resize_to_limit: [120, 120]), class: "rounded shadow border w-24 h-24 object-cover", alt: photo_spot.name %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="no-photo">
+        <p>写真がありません</p>
+      </div>
+    <% end %>
+    <%# 詳細情報（右側） %>
+    <div class="flex-1 min-w-0">
+      <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-sm text-gray-700 break-words">
+        <dt class="font-semibold">名称</dt>
+        <dd><%= photo_spot.name %></dd>
+        <dt class="font-semibold">説明</dt>
+        <dd><%= photo_spot.detail %></dd>
+        <dt class="font-semibold">タグ</dt>
+        <dd><%= photo_spot.tags %></dd>
+      </dl>
+    </div>
+  </div>
+  <%# モーダルウィンドウのHTML部分 %>
+  <div data-image-modal-target="modal"
+    class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-75 hidden">
+    <div class="relative w-full h-full max-w-5xl">
+      <div class="relative w-full h-full flex items-center justify-center">
+        <img data-image-modal-target="image" class="max-w-full max-h-screen object-contain" alt="Enlarged image">
+        <%# 閉じるボタン %>
+        <button data-action="click->image-modal#close" class="absolute top-4 right-4 text-white text-4xl">
+          &times;
+        </button>
+        <%# 左右の矢印ボタン %>
+        <button data-action="click->image-modal#previous" data-image-modal-target="prevBtn" class="absolute left-4 top-1/2 -translate-y-1/2 text-white text-5xl">
+          &lsaquo;
+        </button>
+        <button data-action="click->image-modal#next" data-image-modal-target="nextBtn" class="absolute right-4 top-1/2 -translate-y-1/2 text-white text-5xl">
+          &rsaquo;
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
