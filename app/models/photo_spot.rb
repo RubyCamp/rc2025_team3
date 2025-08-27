@@ -6,6 +6,4 @@ class PhotoSpot < ApplicationRecord
   scope :search_by_keyword, ->(keyword) {
     where("name LIKE :keyword OR detail LIKE :keyword", keyword: "%#{keyword}%") if keyword.present?
   }
-
-  
 end
