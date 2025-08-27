@@ -2,14 +2,14 @@
   <div class="flex flex-col md:flex-row gap-4 flex-1 min-w-0 items-start">
     <%# 画像サムネイル（左側） %>
     <% if photo_spot.images.attached? %>
+      <%# 最初の1枚目の画像のみを取得 %>
+      <% img = photo_spot.images.first %>
       <div class="flex flex-wrap gap-2 mt-2 md:mt-0 md:flex-shrink-0">
-        <% photo_spot.images.each_with_index do |img, index| %>
-          <div class="cursor-pointer" data-action="click->image-modal#open"
-            data-image-modal-index-value="<%= index %>"
-            data-image-modal-images-value="<%= photo_spot.images.map { |i| url_for(i) }.to_json %>">
-            <%= image_tag img.variant(resize_to_limit: [120, 120]), class: "rounded shadow border w-24 h-24 object-cover", alt: photo_spot.name %>
-          </div>
-        <% end %>
+        <div 
+         data-image-modal-index-value="0"
+         data-image-modal-images-value="<%= photo_spot.images.map { |i| url_for(i) }.to_json %>">
+          <%= image_tag img.variant(resize_to_limit: [120, 120]), class: "rounded shadow border w-24 h-24 object-cover", alt: photo_spot.name %>
+        </div>
       </div>
     <% else %>
       <div class="no-photo">
