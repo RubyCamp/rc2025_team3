@@ -11,17 +11,17 @@
       <div class="text-sm text-gray-600 mb-2 line-clamp-2"><%= truncate(photo_spot.detail, length: 60) %></div>
       <% if photo_spot.tags.present? %>
         <div class="text-xs text-gray-500 mb-2">
-          <span class="font-medium">タグ:</span> <%= photo_spot.tags %>
+          <span class="font-medium">タグ:</span> <%= photo_spot.tags%>
         </div>
       <% end %>
-      <%# <div class="flex items-center"> %>
-        <%# <% if photo_spot.reviews.any? %> 
-          <%# <%= render partial: "shared/rating_stars", locals: { rating: (photo_spot.reviews.average(:rating)&.round || 0) } %> %>
-          <%# <span class="text-xs text-gray-500 ml-2">(<%= photo_spot.reviews.count %
-        <%# <% else %> 
-          <%# <span class="text-xs text-gray-400">未評価</span> %>
-        <%# <% end %> 
-      <%# </div> %>
+      <div class="flex items-center">
+        <% if photo_spot.reviews.any? %>
+          <%= render partial: "shared/rating_stars", locals: { rating: (photo_spot.reviews.average(:rating)&.round || 0) } %>
+          <span class="text-xs text-gray-500 ml-2">(<%= photo_spot.reviews.count %>件のレビュー)</span>
+        <% else %>
+          <span class="text-xs text-gray-400">未評価</span>
+        <% end %>
+      </div>
     </div>
   </div>
 <% end %>
