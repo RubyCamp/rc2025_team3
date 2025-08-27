@@ -9,6 +9,21 @@ class Admin::PhotoSpotsController < ApplicationController
     @photo_spot = PhotoSpot.new
   end
 
+  # POST /photo_spots or /photo_spots.json
+  def create
+    @photo_spot = PhotoSpot.new(photo_spot_params)
+
+    respond_to do |format|
+      if @photo_spot.save
+        format.html { redirect_to admin_photo_spot_path(@photo_spot), notice: "PhotoSpot was successfully created." }
+        format.json { render :show, status: :created, location: @photo_spot }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @photo_spot.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
 
   def show
   end
@@ -37,21 +52,6 @@ class Admin::PhotoSpotsController < ApplicationController
     end
   end
 
-  # POST /photo_spots or /photo_spots.json
-  def create
-    @photo_spot = PhotoSpot.new(photo_spot_params)
-
-    respond_to do |format|
-      if @photo_spot.save
-        format.html { redirect_to admin_photo_spot_path(@photo_spot), notice: "PhotoSpot was successfully created." }
-        format.json { render :show, status: :created, location: @photo_spot }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @photo_spot.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
 private
 
   def set_photo_spot
@@ -59,6 +59,6 @@ private
   end
 
   def photo_spot_params
-    params.require(:photo_spot).permit(:name, :address, :detail, :parking_flag, { tag_ids: [] })
+    params.require(:photo_spot).permit(:name, :address, :detail, :parking_flag, { tag_ids: [] }, images: [])
   end
 end
