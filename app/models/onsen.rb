@@ -1,6 +1,4 @@
 class Onsen < ApplicationRecord
-  has_many :reviews, dependent: :destroy
-
   has_many_attached :images
 
   validates :name, presence: true
