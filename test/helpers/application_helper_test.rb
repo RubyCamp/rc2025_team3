@@ -11,10 +11,9 @@ class ApplicationHelperTest < ActionView::TestCase
   end
 
   test "navigation_links for admin path" do
-    links = navigation_links("/admin/photo_spots")
+    links = navigation_links("/admin")
     assert_equal 2, links.length
-
-    admin_link = links.find { |link| link[:path] == "/admin/photo_spots" }
+    admin_link = links.find { |link| link[:path] == "/admin" }
     assert_not_nil admin_link
     assert admin_link[:current]
   end
