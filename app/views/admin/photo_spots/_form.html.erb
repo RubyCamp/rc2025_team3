@@ -24,6 +24,15 @@
     <%= form.text_area :detail, rows: 4, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
   </div>
   <div>
+    <%= form.label :tag_ids, 'タグ', class: 'block font-semibold mb-1' %>
+    <%= form.collection_check_boxes :tag_ids, Tag.all, :id, :name do |b| %>
+      <div class="flex items-center">
+        <%= b.check_box class: "h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" %>
+        <%= b.label class: "ml-2 block text-sm text-gray-900" %>
+      </div>
+    <% end %>
+  </div>
+  <div>
     <%= form.label :parking_flag, '温泉の有無', class: 'block font-semibold mb-1' %>
     <%= form.text_field :parking_flag, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
   </div>

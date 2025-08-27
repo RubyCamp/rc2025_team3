@@ -59,6 +59,6 @@ private
   end
 
   def photo_spot_params
-    params.require(:photo_spot).permit(:name, :address, :detail, :parking_flag)
+    params.require(:photo_spot).permit(:name, :address, :detail, :parking_flag, { tag_ids: [] })
   end
 end
