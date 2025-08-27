@@ -16,9 +16,9 @@
         </h1>
         <% if @photo_spot.tags.present? %>
           <div class="flex flex-wrap gap-2 mb-4">
-            <% @photo_spot.tags.split(',').each do |tag| %>
+            <% @photo_spot.tags.each do |tag| %>
               <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                <%= tag.strip %>
+                <%= tag.name %>
               </span>
             <% end %>
           </div>
@@ -48,7 +48,7 @@
       </div>
     <% end %>
     <div class="prose max-w-none mb-6">
-      <p class="text-gray-700 leading-relaxed"><%= simple_format(@photo_spot.description) %></p>
+      <p class="text-gray-700 leading-relaxed"><%= simple_format(@photo_spot.detail) %></p>
     </div>
   </div>
   <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
