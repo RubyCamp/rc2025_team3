@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :onsens, only: %i[ index show ] do
+  resources :photo_spots, only: %i[ index show ] do
     resources :reviews, only: %i[ create new ]
   end
 
@@ -19,5 +19,5 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  root "onsens#index"
+  root "photo_spots#index"
 end

@@ -1,0 +1,27 @@
+<%# フォトスポットスポットカード（Atomic Design: Molecule） %>
+<%= link_to photo_spot_path(photo_spot), class: "block bg-white rounded-lg shadow-md hover:shadow-lg p-4 hover:bg-blue-50 transition-all duration-200 cursor-pointer border border-gray-100 focus:outline focus:ring-2 focus:ring-blue-400", 'aria-label': "#{photo_spot.name}の詳細" do %>
+  <div class="flex items-start gap-4">
+    <% if photo_spot.images.attached? %>
+      <%= image_tag photo_spot.images.first, class: "w-20 h-20 object-cover rounded-lg flex-shrink-0", alt: photo_spot.name %>
+    <% else %>
+      <div class="w-20 h-20 bg-gray-200 rounded-lg flex items-center justify-center text-gray-400 flex-shrink-0 text-xs">No Image</div>
+    <% end %>
+    <div class="flex-1 min-w-0">
+      <h2 class="text-lg font-semibold mb-2 text-gray-900 truncate"><%= photo_spot.name %></h2>
+      <div class="text-sm text-gray-600 mb-2 line-clamp-2"><%= truncate(photo_spot.detail, length: 60) %></div>
+      <% if photo_spot.tags.present? %>
+        <div class="text-xs text-gray-500 mb-2">
+          <span class="font-medium">タグ:</span> <%= photo_spot.tags %>
+        </div>
+      <% end %>
+      <%# <div class="flex items-center"> %>
+        <%# <% if photo_spot.reviews.any? %> 
+          <%# <%= render partial: "shared/rating_stars", locals: { rating: (photo_spot.reviews.average(:rating)&.round || 0) } %> %>
+          <%# <span class="text-xs text-gray-500 ml-2">(<%= photo_spot.reviews.count %
+        <%# <% else %> 
+          <%# <span class="text-xs text-gray-400">未評価</span> %>
+        <%# <% end %> 
+      <%# </div> %>
+    </div>
+  </div>
+<% end %>
