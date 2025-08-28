@@ -7,6 +7,7 @@ export default class extends Controller {
   static values = { onsens: Array }
 
   connect() {
+    this.currentMarker = null;
     this.onsens = this._parseOnsensData();
     console.log(this.onsens);
 
@@ -28,6 +29,25 @@ export default class extends Controller {
         .addTo(this.map)
         .bindPopup(onsen.name);
     });
+    this.map.on('click', (e) => {
+      const latlng = e.latlng;
+
+      // 既存のピンがあれば削除
+      if (this.currentMarker) {
+        this.map.removeLayer(this.currentMarker);
+      }
+
+      // 新しいピンを立てて保存
+      this.currentMarker = L.marker(latlng)
+        .addTo(this.map)
+        .bindPopup(`
+      📍 ピンを立てました<br>
+      緯度: ${latlng.lat.toFixed(5)}<br>
+      経度: ${latlng.lng.toFixed(5)}
+    `)
+        .openPopup();
+    });
+
   }
 
   disconnect() {
