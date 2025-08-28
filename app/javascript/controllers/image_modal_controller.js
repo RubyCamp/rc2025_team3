@@ -18,6 +18,7 @@ export default class extends Controller {
     this.showImage(this.indexValue);
     this.modalTarget.classList.remove("hidden");
     this.updateNavigationButtons();
+    console.log("image-modal#openが呼ばれた");
   }
 
   // モーダルを閉じる
