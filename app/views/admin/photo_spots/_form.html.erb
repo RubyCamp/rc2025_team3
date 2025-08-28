@@ -30,6 +30,7 @@
   <div>
     <%= form.label :season, 'おすすめの季節', class: 'block font-semibold mb-1' %>
     <%= form.select :season, options_for_select([['春', 'spring'], ['夏', 'summer'], ['秋', 'autumn'], ['冬', 'winter']], selected: photo_spot.season), { include_blank: '選択してください' }, { class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" } %>
+  </div>
   <%# 緯度・経度の入力フィールド %>
   <div class="flex flex-col sm:flex-row gap-4">
     <div class="flex-1">
