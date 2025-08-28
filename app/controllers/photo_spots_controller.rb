@@ -2,7 +2,8 @@ class PhotoSpotsController < ApplicationController
   before_action :set_photo_spot, only: %i[ show ]
   def index
     @photo_spots = PhotoSpot.all
-    @photo_spots = @photo_spots.search_by_keyword(params[:q]) if params[:q].present?
+    @photo_spots = PhotoSpot.apply_text_search(@photo_spots, params[:q])
+    @photo_spots = PhotoSpot.apply_tag_search(@photo_spots, params[:tags])
   end
 
   def show
