@@ -21,8 +21,8 @@ ja:
       blank: "を入力してください"
   time:
     formats:
-      short: "%Y/%m/%d %H:%M"
-      long: "%Y/%m/%d %H:%M:%S"
+      short: "%H:%M"
+      long: "%H:%M"
   datetime:
     distance_in_words:
       about_x_hours:

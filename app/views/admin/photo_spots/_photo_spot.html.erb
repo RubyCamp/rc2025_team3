@@ -25,6 +25,26 @@
         <dd><%= photo_spot.detail %></dd>
         <dt class="font-semibold">タグ</dt>
         <dd><%= photo_spot.tags %></dd>
+        <dt class="font-semibold">時間帯</dt>
+        <dd>
+           <%= photo_spot.timestart ? photo_spot.timestart.strftime("%H:%M") : "未設定" %> 〜
+           <%= photo_spot.timeend ? photo_spot.timeend.strftime("%H:%M") : "未設定" %>
+        </dd>
+        <dt class="font-semibold">おすすめの季節</dt>
+        <dd>
+          <% case photo_spot.season %>
+          <% when 'spring' %>
+            春
+          <% when 'summer' %>
+            夏
+          <% when 'autumn' %> 
+            秋
+          <% when 'winter' %>
+            冬
+          <% else %>
+            未設定
+          <% end %>
+        </dd>
       </dl>
     </div>
   </div>
