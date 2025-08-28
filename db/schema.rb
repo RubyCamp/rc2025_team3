@@ -77,6 +77,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_28_004531) do
     t.index ["photo_spot_id"], name: "index_reviews_on_photo_spot_id"
   end
 
+  create_table "users", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "reviews", "photo_spots"
