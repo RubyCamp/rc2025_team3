@@ -20,7 +20,7 @@ export default class extends Controller {
 
     // 既存のスポットのマーカーを設置
     const photo_spotIcon = L.icon({
-      iconUrl: '/photo_spot.svg',
+      iconUrl: '/onsen.svg',
       iconSize: [32, 32],
       iconAnchor: [16, 32],
     });
