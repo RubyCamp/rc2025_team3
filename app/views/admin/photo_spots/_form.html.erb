@@ -1,4 +1,4 @@
-<%= form_with(model: [:admin, photo_spot || @photo_spot], html: { multipart: true, class: "space-y-6" }) do |form| %>
+<%= form_with(model: [:admin, photo_spot || @photo_spot], html: { multipart: true, class: "space-y-6", data: { controller: "map" } }) do |form| %>
   <% if photo_spot.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
       <h2><%= pluralize(photo_spot.errors.count, "件のエラー") %>があります:</h2>
@@ -18,6 +18,30 @@
       <%= form.label :address, '住所', class: 'block font-semibold mb-1' %>
       <%= form.text_field :address, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
     </div>
+  </div>
+  <%# 緯度・経度の入力フィールド %>
+  <div class="flex flex-col sm:flex-row gap-4">
+    <div class="flex-1">
+      <%= form.label :latitude, '緯度', class: 'block font-semibold mb-1' %>
+      <%= form.text_field :latitude,
+                          data: { map_target: 'latitudeInput', action: 'input->map#updateMarkerFromInput' },
+                          class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
+    </div>
+    <div class="flex-1">
+      <%= form.label :longitude, '経度', class: 'block font-semibold mb-1' %>
+      <%= form.text_field :longitude,
+                          data: { map_target: 'longitudeInput', action: 'input->map#updateMarkerFromInput' },
+                          class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
+    </div>
+  </div>
+  <%# 地図エリア（デスクトップ時） %>
+  <div class="relative h-96 lg:h-[600px] rounded-lg overflow-hidden shadow-lg">
+    <div data-map-target="container" style="width: 100%; height: 100%;"></div>
+    <button type="button"
+                class="absolute top-3 right-3 bg-white border rounded-lg px-4 py-2 text-sm shadow-lg hover:bg-blue-50 z-10 focus:ring-2 focus:ring-blue-500"
+                data-action="click->map#locate">
+      📍 <%= t('views.photo_spots.index.current_location') %>
+    </button>
   </div>
   <div>
     <%= form.label :detail, '説明', class: 'block font-semibold mb-1' %>
