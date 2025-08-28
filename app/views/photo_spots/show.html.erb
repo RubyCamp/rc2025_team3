@@ -54,6 +54,8 @@
         </dd>
       </dl>
     </div>
+    <div class="flex flex-wrap gap-2 mt-2 md:mt-0 md:flex-shrink-0">
+      </div>
           </span>
         </h1>
         <% if @photo_spot.tags.present? %>
@@ -92,6 +94,26 @@
         <% end %>
       </div>
     <% end %>
+    <%# モーダルウィンドウのHTML部分 %>
+    <div data-image-modal-target="modal"
+    class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-75 hidden">
+      <div class="relative w-full h-full max-w-5xl">
+        <div class="relative w-full h-full flex items-center justify-center">
+          <img data-image-modal-target="image" class="max-w-full max-h-screen object-contain" alt="Enlarged image">
+          <%# 閉じるボタン %>
+          <button data-action="click->image-modal#close" class="absolute top-4 right-4 text-white text-4xl">
+            &times;
+          </button>
+          <%# 左右の矢印ボタン %>
+          <button data-action="click->image-modal#previous" data-image-modal-target="prevBtn" class="absolute left-4 top-1/2 -translate-y-1/2 text-white text-5xl">
+            &lsaquo;
+          </button>
+          <button data-action="click->image-modal#next" data-image-modal-target="nextBtn" class="absolute right-4 top-1/2 -translate-y-1/2 text-white text-5xl">
+            &rsaquo;
+          </button>
+        </div>
+      </div>
+    </div>
     <div class="prose max-w-none mb-6">
       <p class="text-gray-700 leading-relaxed"><%= simple_format(@photo_spot.detail) %></p>
     </div>
