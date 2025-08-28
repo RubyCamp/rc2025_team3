@@ -19,61 +19,72 @@
       <%= form.text_field :address, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
     </div>
   </div>
-  <%# 地図エリア（デスクトップ時） %>
-  <div data-controller="form-map">
-    <div class="relative h-96 lg:h-[600px] rounded-lg overflow-hidden shadow-lg">
-      <div data-form-map-target="container" style="width: 100%; height: 100%;"></div>
-      <button type="button"
+  <div>
+    <%= form.label :timestart, '時間帯（開始）', class: 'block font-semibold mb-1' %>
+    <%= form.select :timestart, options_for_select((0..23).map { |h| ["#{h}:00", "#{h}:00"] } , selected: photo_spot.timestart&.strftime("%H:%M")), { include_blank: '選択してください' }, { class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" } %>
+  </div>
+  <div>
+    <%= form.label :timeend, '時間帯（終了）', class: 'block font-semibold mb-1' %>
+    <%= form.select :timeend, options_for_select((0..23).map { |h| ["#{h}:00", "#{h}:00"] } , selected: photo_spot.timestart&.strftime("%H:%M")), { include_blank: '選択してください' }, { class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" } %>
+  </div>
+  <div>
+    <%= form.label :season, 'おすすめの季節', class: 'block font-semibold mb-1' %>
+    <%= form.select :season, options_for_select([['春', 'spring'], ['夏', 'summer'], ['秋', 'autumn'], ['冬', 'winter']], selected: photo_spot.season), { include_blank: '選択してください' }, { class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" } %>
+    <%# 地図エリア（デスクトップ時） %>
+    <div data-controller="form-map">
+      <div class="relative h-96 lg:h-[600px] rounded-lg overflow-hidden shadow-lg">
+        <div data-form-map-target="container" style="width: 100%; height: 100%;"></div>
+        <button type="button"
             class="absolute top-3 right-3 bg-white border rounded-lg px-4 py-2 text-sm shadow-lg hover:bg-blue-50 z-10 focus:ring-2 focus:ring-blue-500"
             data-action="click->form-map#locate">
-        📍 現在地
-      </button>
-    </div>
-    <%# 緯度・経度の入力フィールドを地図コントローラーのスコープ内に配置 %>
-    <div class="flex flex-col sm:flex-row gap-4 mt-6">
-      <div class="flex-1">
-        <%= form.label :latitude, '緯度', class: 'block font-semibold mb-1' %>
-        <%= form.text_field :latitude,
+          📍 現在地
+        </button>
+      </div>
+      <%# 緯度・経度の入力フィールドを地図コントローラーのスコープ内に配置 %>
+      <div class="flex flex-col sm:flex-row gap-4 mt-6">
+        <div class="flex-1">
+          <%= form.label :latitude, '緯度', class: 'block font-semibold mb-1' %>
+          <%= form.text_field :latitude,
                           data: { form_map_target: 'latitudeInput', action: 'input->form-map#updateMarkerFromInput' },
                           class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
-      </div>
-      <div class="flex-1">
-        <%= form.label :longitude, '経度', class: 'block font-semibold mb-1' %>
-        <%= form.text_field :longitude,
+        </div>
+        <div class="flex-1">
+          <%= form.label :longitude, '経度', class: 'block font-semibold mb-1' %>
+          <%= form.text_field :longitude,
                           data: { form_map_target: 'longitudeInput', action: 'input->form-map#updateMarkerFromInput' },
                           class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
+        </div>
       </div>
     </div>
-  </div>
-  <div>
-    <%= form.label :detail, '説明', class: 'block font-semibold mb-1' %>
-    <%= form.text_area :detail, rows: 4, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
-  </div>
-  <div>
-    <%= form.label :tags, 'タグ（カンマ区切り）', class: 'block font-semibold mb-1' %>
-    <%= form.text_field :tags, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
-  </div>
-  <div>
-    <%= form.label :parking_flag, '駐車場の有無', class: 'block font-semibold mb-1' %>
-    <%= form.text_field :parking_flag, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
-  </div>
-  <div>
-    <%= form.label :images, '画像（最大5枚・JPEG/PNG/GIF）', class: 'block font-semibold mb-1' %>
-    <%= form.file_field :images, multiple: true, accept: 'image/jpeg,image/png,image/gif', class: "block border rounded px-2 py-1 w-full" %>
-    <% if photo_spot.images.attached? %>
-      <div class="flex flex-wrap gap-2 mt-2">
-        <% photo_spot.images.each_with_index do |img, idx| %>
-          <div class="relative group">
-            <%= image_tag img.variant(resize_to_limit: [100,100]), class: "rounded shadow border w-24 h-24 object-cover", alt: photo_spot.name %>
-            <label class="block text-xs text-center mt-1">
-              <%= check_box_tag "photo_spot[remove_image_ids][]", img.id, false %> 削除
-            </label>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-  <div class="flex flex-col sm:flex-row gap-2">
-    <%= form.submit class: "rounded-md px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold w-full sm:w-auto" %>
-  </div>
-<% end %>
+    <div>
+      <%= form.label :detail, '説明', class: 'block font-semibold mb-1' %>
+      <%= form.text_area :detail, rows: 4, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
+    </div>
+    <div>
+      <%= form.label :tags, 'タグ（カンマ区切り）', class: 'block font-semibold mb-1' %>
+      <%= form.text_field :tags, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
+    </div>
+    <div>
+      <%= form.label :parking_flag, '駐車場の有無', class: 'block font-semibold mb-1' %>
+      <%= form.text_field :parking_flag, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
+    </div>
+    <div>
+      <%= form.label :images, '画像（最大5枚・JPEG/PNG/GIF）', class: 'block font-semibold mb-1' %>
+      <%= form.file_field :images, multiple: true, accept: 'image/jpeg,image/png,image/gif', class: "block border rounded px-2 py-1 w-full" %>
+      <% if photo_spot.images.attached? %>
+        <div class="flex flex-wrap gap-2 mt-2">
+          <% photo_spot.images.each_with_index do |img, idx| %>
+            <div class="relative group">
+              <%= image_tag img.variant(resize_to_limit: [100,100]), class: "rounded shadow border w-24 h-24 object-cover", alt: photo_spot.name %>
+              <label class="block text-xs text-center mt-1">
+                <%= check_box_tag "photo_spot[remove_image_ids][]", img.id, false %> 削除
+              </label>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+      <%= form.submit class: "rounded-md px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-semibold w-full sm:w-auto" %>
+    </div>
+  <% end %>
