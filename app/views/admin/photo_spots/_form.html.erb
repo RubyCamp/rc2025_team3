@@ -19,6 +19,17 @@
       <%= form.text_field :address, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
     </div>
   </div>
+  <div>
+     <%= form.label :timestart, '時間帯（開始）', class: 'block font-semibold mb-1' %>
+     <%= form.select :timestart, options_for_select((0..23).map { |h| ["#{h}:00", "#{h}:00"] } , selected: photo_spot.timestart&.strftime("%H:%M")), { include_blank: '選択してください' }, { class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" } %> 
+  </div>
+  <div>
+      <%= form.label :timeend, '時間帯（終了）', class: 'block font-semibold mb-1' %>
+      <%= form.select :timeend, options_for_select((0..23).map { |h| ["#{h}:00", "#{h}:00"] } , selected: photo_spot.timestart&.strftime("%H:%M")), { include_blank: '選択してください' }, { class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" } %> 
+  </div>
+  <div>
+    <%= form.label :season, 'おすすめの季節', class: 'block font-semibold mb-1' %>
+    <%= form.select :season, options_for_select([['春', 'spring'], ['夏', 'summer'], ['秋', 'autumn'], ['冬', 'winter']], selected: photo_spot.season), { include_blank: '選択してください' }, { class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" } %>
   <%# 緯度・経度の入力フィールド %>
   <div class="flex flex-col sm:flex-row gap-4">
     <div class="flex-1">
