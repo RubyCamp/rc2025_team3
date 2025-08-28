@@ -65,9 +65,26 @@
     <%= form.label :tags, 'タグ（カンマ区切り）', class: 'block font-semibold mb-1' %>
     <%= form.text_field :tags, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
   </div>
-  <div>
-    <%= form.label :parking_flag, '駐車場の有無', class: 'block font-semibold mb-1' %>
-    <%= form.text_field :parking_flag, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
+  <div data-controller="parking">
+    <div class="flex gap-4 mb-2">
+      <label>
+        <%= form.radio_button :parking_flag, 1, data: { action: "change->parking#toggle" }, checked: form.object.parking_flag == 1 %> ある
+      </label>
+      <label>
+        <%= form.radio_button :parking_flag, 0, data: { action: "change->parking#toggle" }, checked: form.object.parking_flag == 0 %> ない
+      </label>
+      <label>
+        <%= form.radio_button :parking_flag, nil, data: { action: "change->parking#toggle" }, checked: form.object.parking_flag.nil? %> わからない
+      </label>
+    </div>
+    <div class="w-32">
+      <%= form.label :parking_count, '台数' %>
+      <%= form.number_field :parking_count,
+          min: 1,
+          data: { parking_target: "countInput" },
+          disabled: form.object.parking_flag != 1,
+          class: form.object.parking_flag == 1 ? "bg-white text-black border rounded px-2 py-1" : "bg-gray-200 text-gray-500 border rounded px-2 py-1" %>
+    </div>
   </div>
   <div>
     <%= form.label :images, '画像（最大5枚・JPEG/PNG/GIF）', class: 'block font-semibold mb-1' %>
