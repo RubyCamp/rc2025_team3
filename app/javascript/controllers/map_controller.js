@@ -3,12 +3,13 @@ import L from "leaflet"
 
 // Connects to data-controller="map"
 export default class extends Controller {
-  static targets = ["container"]
-  static values = { onsens: Array }
+  // 新しいターゲットを追加しました
+  static targets = ["container", "latitudeInput", "longitudeInput"]
+  static values = { photo_spots: Array }
 
   connect() {
-    this.onsens = this._parseOnsensData();
-    console.log(this.onsens);
+    this.currentMarker = null;
+    this.photo_spots = this._parsePhotoSpotsData();
 
     this.map = L.map(this.containerTarget).setView([35.468, 133.0483], 11.5);
 
@@ -17,16 +18,30 @@ export default class extends Controller {
       attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(this.map);
 
-    const onsenIcon = L.icon({
-      iconUrl: '/onsen.svg',
+    const photo_spotIcon = L.icon({
+      iconUrl: '/photo_spot.svg',
       iconSize: [32, 32],
       iconAnchor: [16, 32],
     });
 
-    this.onsens.forEach(onsen => {
-      L.marker([onsen.geo_lat, onsen.geo_lng], { icon: onsenIcon })
+    this.photo_spots.forEach(photo_spot => {
+      L.marker([photo_spot.geo_lat, photo_spot.geo_lng], { icon: photo_spotIcon })
         .addTo(this.map)
-        .bindPopup(onsen.name);
+        .bindPopup(photo_spot.name);
+    });
+
+    // フォームに初期値があればピンを立てる
+    if (this.latitudeInputTarget.value && this.longitudeInputTarget.value) {
+      this.updateMarker(this.latitudeInputTarget.value, this.longitudeInputTarget.value);
+    }
+
+    // マップクリック時のイベントリスナー
+    this.map.on("click", (e) => {
+      const { lat, lng } = e.latlng;
+      this.updateMarker(lat, lng);
+      // テキストボックスの値を更新
+      this.latitudeInputTarget.value = lat.toFixed(5);
+      this.longitudeInputTarget.value = lng.toFixed(5);
     });
   }
 
@@ -37,18 +52,37 @@ export default class extends Controller {
     }
   }
 
+  // --- 新しく追加したメソッド ---
+
+  // マーカーを更新し、マップの中心を移動するメソッド
+  updateMarker(lat, lng) {
+    if (this.currentMarker) {
+      this.map.removeLayer(this.currentMarker);
+    }
+    const latlng = [lat, lng];
+    this.currentMarker = L.marker(latlng).addTo(this.map);
+    this.map.setView(latlng, this.map.getZoom()); // 既存のズームレベルでビューを更新
+  }
+
+  // フォームの入力値からマーカーを更新するメソッド
+  updateMarkerFromInput() {
+    const lat = parseFloat(this.latitudeInputTarget.value);
+    const lng = parseFloat(this.longitudeInputTarget.value);
+
+    // 有効な数値であることを確認
+    if (!isNaN(lat) && !isNaN(lng)) {
+      this.updateMarker(lat, lng);
+    }
+  }
+
   // === プライベートメソッド（内部処理用） ===
 
-  /**
-   * HTML要素から温泉データを取得・パース
-   * @returns {Array} 温泉データの配列
-   */
-  _parseOnsensData() {
+  _parsePhotoSpotsData() {
     try {
-      const rawData = this.element.dataset.mapOnsens || "[]";
+      const rawData = this.element.dataset.mapPhotoSpots || "[]";
       return JSON.parse(rawData);
     } catch (error) {
-      console.warn("温泉データのパースに失敗:", error);
+      console.warn("写真スポットデータのパースに失敗:", error);
       return [];
     }
   }

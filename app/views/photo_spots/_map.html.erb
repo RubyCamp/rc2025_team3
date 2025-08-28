@@ -1,0 +1,9 @@
+<%# 地図エリア（左側・デスクトップ時） %>
+<div class="relative h-96 lg:h-[600px] rounded-lg overflow-hidden shadow-lg">
+  <div data-controller="map" data-map-target="container" data-map-photo_spots="<%= h @photo_spots.to_json(only: [:id, :name, :geo_lat, :geo_lng]) %>" style="width: 100%; height: 100%;"></div>
+  <button type="button"
+                class="absolute top-3 right-3 bg-white border rounded-lg px-4 py-2 text-sm shadow-lg hover:bg-blue-50 z-10 focus:ring-2 focus:ring-blue-500"
+                data-action="click->map#locate">
+    📍 <%= t('views.photo_spots.index.current_location') %>
+  </button>
+</div>
