@@ -27,45 +27,57 @@
         <dd><%= photo_spot.tags %></dd>
         <dt class="font-semibold">時間帯</dt>
         <dd>
-           <%= photo_spot.timestart ? photo_spot.timestart.strftime("%H:%M") : "未設定" %> 〜
-           <%= photo_spot.timeend ? photo_spot.timeend.strftime("%H:%M") : "未設定" %>
+          <%= photo_spot.timestart ? photo_spot.timestart.strftime("%H:%M") : "未設定" %> 〜
+          <%= photo_spot.timeend ? photo_spot.timeend.strftime("%H:%M") : "未設定" %>
         </dd>
-        <dt class="font-semibold">おすすめの季節</dt>
+        <dt class="font-semibold">駐車場</dt>
         <dd>
-          <% case photo_spot.season %>
-          <% when 'spring' %>
-            春
-          <% when 'summer' %>
-            夏
-          <% when 'autumn' %> 
-            秋
-          <% when 'winter' %>
-            冬
-          <% else %>
-            未設定
-          <% end %>
-        </dd>
-      </dl>
-    </div>
+          <% if photo_spot.parking_flag == 1 %>
+            駐車場あり
+            <% if photo_spot.parking_count%>
+              ：<%= photo_spot.parking_count %> 台
+            <% end %>
+          <% elsif photo_spot.parking_flag == 0 %>
+            駐車場なし
+          </div>
+        <% end %>
+      </dd>
+      <dt class="font-semibold">おすすめの季節</dt>
+      <dd>
+        <% case photo_spot.season %>
+        <% when 'spring' %>
+          春
+        <% when 'summer' %>
+          夏
+        <% when 'autumn' %>
+          秋
+        <% when 'winter' %>
+          冬
+        <% else %>
+          未設定
+        <% end %>
+      </dd>
+    </dl>
   </div>
-  <%# モーダルウィンドウのHTML部分 %>
-  <div data-image-modal-target="modal"
+</div>
+<%# モーダルウィンドウのHTML部分 %>
+<div data-image-modal-target="modal"
     class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-75 hidden">
-    <div class="relative w-full h-full max-w-5xl">
-      <div class="relative w-full h-full flex items-center justify-center">
-        <img data-image-modal-target="image" class="max-w-full max-h-screen object-contain" alt="Enlarged image">
-        <%# 閉じるボタン %>
-        <button data-action="click->image-modal#close" class="absolute top-4 right-4 text-white text-4xl">
-          &times;
-        </button>
-        <%# 左右の矢印ボタン %>
-        <button data-action="click->image-modal#previous" data-image-modal-target="prevBtn" class="absolute left-4 top-1/2 -translate-y-1/2 text-white text-5xl">
-          &lsaquo;
-        </button>
-        <button data-action="click->image-modal#next" data-image-modal-target="nextBtn" class="absolute right-4 top-1/2 -translate-y-1/2 text-white text-5xl">
-          &rsaquo;
-        </button>
-      </div>
+  <div class="relative w-full h-full max-w-5xl">
+    <div class="relative w-full h-full flex items-center justify-center">
+      <img data-image-modal-target="image" class="max-w-full max-h-screen object-contain" alt="Enlarged image">
+      <%# 閉じるボタン %>
+      <button data-action="click->image-modal#close" class="absolute top-4 right-4 text-white text-4xl">
+        &times;
+      </button>
+      <%# 左右の矢印ボタン %>
+      <button data-action="click->image-modal#previous" data-image-modal-target="prevBtn" class="absolute left-4 top-1/2 -translate-y-1/2 text-white text-5xl">
+        &lsaquo;
+      </button>
+      <button data-action="click->image-modal#next" data-image-modal-target="nextBtn" class="absolute right-4 top-1/2 -translate-y-1/2 text-white text-5xl">
+        &rsaquo;
+      </button>
     </div>
   </div>
+</div>
 </div>
