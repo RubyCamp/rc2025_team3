@@ -19,29 +19,31 @@
       <%= form.text_field :address, class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
     </div>
   </div>
-  <%# 緯度・経度の入力フィールド %>
-  <div class="flex flex-col sm:flex-row gap-4">
-    <div class="flex-1">
-      <%= form.label :latitude, '緯度', class: 'block font-semibold mb-1' %>
-      <%= form.text_field :latitude,
-                          data: { map_target: 'latitudeInput', action: 'input->map#updateMarkerFromInput' },
-                          class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
-    </div>
-    <div class="flex-1">
-      <%= form.label :longitude, '経度', class: 'block font-semibold mb-1' %>
-      <%= form.text_field :longitude,
-                          data: { map_target: 'longitudeInput', action: 'input->map#updateMarkerFromInput' },
-                          class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
-    </div>
-  </div>
   <%# 地図エリア（デスクトップ時） %>
-  <div class="relative h-96 lg:h-[600px] rounded-lg overflow-hidden shadow-lg">
-    <div data-map-target="container" style="width: 100%; height: 100%;"></div>
-    <button type="button"
-                class="absolute top-3 right-3 bg-white border rounded-lg px-4 py-2 text-sm shadow-lg hover:bg-blue-50 z-10 focus:ring-2 focus:ring-blue-500"
-                data-action="click->map#locate">
-      📍 <%= t('views.photo_spots.index.current_location') %>
-    </button>
+  <div data-controller="form-map">
+    <div class="relative h-96 lg:h-[600px] rounded-lg overflow-hidden shadow-lg">
+      <div data-form-map-target="container" style="width: 100%; height: 100%;"></div>
+      <button type="button"
+            class="absolute top-3 right-3 bg-white border rounded-lg px-4 py-2 text-sm shadow-lg hover:bg-blue-50 z-10 focus:ring-2 focus:ring-blue-500"
+            data-action="click->form-map#locate">
+        📍 現在地
+      </button>
+    </div>
+    <%# 緯度・経度の入力フィールドを地図コントローラーのスコープ内に配置 %>
+    <div class="flex flex-col sm:flex-row gap-4 mt-6">
+      <div class="flex-1">
+        <%= form.label :latitude, '緯度', class: 'block font-semibold mb-1' %>
+        <%= form.text_field :latitude,
+                          data: { form_map_target: 'latitudeInput', action: 'input->form-map#updateMarkerFromInput' },
+                          class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
+      </div>
+      <div class="flex-1">
+        <%= form.label :longitude, '経度', class: 'block font-semibold mb-1' %>
+        <%= form.text_field :longitude,
+                          data: { form_map_target: 'longitudeInput', action: 'input->form-map#updateMarkerFromInput' },
+                          class: "block shadow-sm rounded-md border px-3 py-2 w-full border-gray-300 focus:outline-blue-600" %>
+      </div>
+    </div>
   </div>
   <div>
     <%= form.label :detail, '説明', class: 'block font-semibold mb-1' %>
