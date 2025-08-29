@@ -1,72 +1,9 @@
 <% content_for :title, @photo_spot.name %>
 <div  data-controller="image-modal">
- <div class="container mx-auto px-4 py-6">
-  <% if notice.present? %>
-    <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded mb-6">
-      <%= notice %>
-    </div>
-  <% end %>
-  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
-    <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-6">
-      <div class="flex-1">
-        <h1 class="text-3xl font-bold text-gray-900 mb-2">
-          <%= @photo_spot.name %>
-          <span class="text-gray-600 text-lg font-normal">
-            （<%= @photo_spot.reviews.count %>件のレビュー）
-             <div class="flex-1 min-w-0">
-      <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-sm text-gray-700 break-words">
-        <dt class="font-semibold">名称</dt>
-        <dd><%= @photo_spot.name %></dd>
-        <dt class="font-semibold">説明</dt>
-        <dd><%= @photo_spot.detail %></dd>
-        <dt class="font-semibold">タグ</dt>
-        <dd><%= @photo_spot.tags %></dd>
-        <dt class="font-semibold">時間帯</dt>
-        <dd>
-           <%= @photo_spot.timestart ? @photo_spot.timestart.strftime("%H:%M") : "未設定" %> 〜
-           <%= @photo_spot.timeend ? @photo_spot.timeend.strftime("%H:%M") : "未設定" %>
-        </dd>
-        <dt class="font-semibold">駐車場</dt>
-        <dd>
-          <% if @photo_spot.parking_flag == 1 %>
-            駐車場あり
-            <% if @photo_spot.parking_count%>
-              ：<%= @photo_spot.parking_count %> 台
-            <% end %>
-          <% elsif @photo_spot.parking_flag == 0 %>
-            駐車場なし
-        <% end %>
-        </dd>
-        <dt class="font-semibold">おすすめの季節</dt>
-        <dd>
-          <% case @photo_spot.season %>
-          <% when 'spring' %>
-            春
-          <% when 'summer' %>
-            夏
-          <% when 'autumn' %> 
-            秋
-          <% when 'winter' %>
-            冬
-          <% else %>
-            未設定
-          <% end %>
-        </dd>
-      </dl>
-    </div>
-    <div class="flex flex-wrap gap-2 mt-2 md:mt-0 md:flex-shrink-0">
-      </div>
-          </span>
-        </h1>
-        <% if @photo_spot.tags.present? %>
-          <div class="flex flex-wrap gap-2 mb-4">
-            <% @photo_spot.tags.each do |tag| %>
-              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                <%= tag.name %>
-              </span>
-            <% end %>
-          </div>
-        <% end %>
+  <div class="container mx-auto px-4 py-6">
+    <% if notice.present? %>
+      <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded mb-6">
+        <%= notice %>
       </div>
     <% end %>
     <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
@@ -158,29 +95,6 @@
       <div class="prose max-w-none mb-6">
         <p class="text-gray-700 leading-relaxed"><%= simple_format(@photo_spot.detail) %></p>
       </div>
-    <% end %>
-    <%# モーダルウィンドウのHTML部分 %>
-    <div data-image-modal-target="modal"
-    class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-75 hidden">
-      <div class="relative w-full h-full max-w-5xl">
-        <div class="relative w-full h-full flex items-center justify-center">
-          <img data-image-modal-target="image" class="max-w-full max-h-screen object-contain" alt="Enlarged image">
-          <%# 閉じるボタン %>
-          <button data-action="click->image-modal#close" class="absolute top-4 right-4 text-white text-4xl">
-            &times;
-          </button>
-          <%# 左右の矢印ボタン %>
-          <button data-action="click->image-modal#previous" data-image-modal-target="prevBtn" class="absolute left-4 top-1/2 -translate-y-1/2 text-white text-5xl">
-            &lsaquo;
-          </button>
-          <button data-action="click->image-modal#next" data-image-modal-target="nextBtn" class="absolute right-4 top-1/2 -translate-y-1/2 text-white text-5xl">
-            &rsaquo;
-          </button>
-        </div>
-      </div>
-    </div>
-    <div class="prose max-w-none mb-6">
-      <p class="text-gray-700 leading-relaxed"><%= simple_format(@photo_spot.detail) %></p>
     </div>
     <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
       <h2 class="text-2xl font-semibold text-gray-900 mb-6 flex items-center">
