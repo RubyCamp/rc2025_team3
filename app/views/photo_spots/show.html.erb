@@ -1,5 +1,5 @@
 <% content_for :title, @photo_spot.name %>
-<div  data-controller="image-modal">
+<div data-controller="image-modal">
   <div class="container mx-auto px-4 py-6">
     <% if notice.present? %>
       <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded mb-6">
@@ -13,47 +13,6 @@
             <%= @photo_spot.name %>
             <span class="text-gray-600 text-lg font-normal">
               （<%= @photo_spot.reviews.count %>件のレビュー）
-              <div class="flex-1 min-w-0">
-                <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-sm text-gray-700 break-words">
-                  <dt class="font-semibold">名称</dt>
-                  <dd><%= @photo_spot.name %></dd>
-                  <dt class="font-semibold">説明</dt>
-                  <dd><%= @photo_spot.detail %></dd>
-                  <dt class="font-semibold">タグ</dt>
-                  <dd><%= @photo_spot.tags %></dd>
-                  <dt class="font-semibold">時間帯</dt>
-                  <dd>
-                    <%= @photo_spot.timestart ? @photo_spot.timestart.strftime("%H:%M") : "未設定" %> 〜
-                    <%= @photo_spot.timeend ? @photo_spot.timeend.strftime("%H:%M") : "未設定" %>
-                  </dd>
-                  <dt class="font-semibold">駐車場</dt>
-                  <dd>
-                    <% if @photo_spot.parking_flag == 1 %>
-                      駐車場あり
-                      <% if @photo_spot.parking_count%>
-                        ：<%= @photo_spot.parking_count %> 台
-                      <% end %>
-                    <% elsif @photo_spot.parking_flag == 0 %>
-                      駐車場なし
-                    <% end %>
-                  </dd>
-                  <dt class="font-semibold">おすすめの季節</dt>
-                  <dd>
-                    <% case @photo_spot.season %>
-                    <% when 'spring' %>
-                      春
-                    <% when 'summer' %>
-                      夏
-                    <% when 'autumn' %>
-                      秋
-                    <% when 'winter' %>
-                      冬
-                    <% else %>
-                      未設定
-                    <% end %>
-                  </dd>
-                </dl>
-              </div>
             </span>
           </h1>
           <% if @photo_spot.tags.present? %>
@@ -65,22 +24,63 @@
               <% end %>
             </div>
           <% end %>
+          <div class="flex-1 min-w-0">
+            <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-2 text-sm text-gray-700 break-words">
+              <dt class="font-semibold">名称</dt>
+              <dd><%= @photo_spot.name %></dd>
+              <dt class="font-semibold">説明</dt>
+              <dd><%= @photo_spot.detail %></dd>
+              <dt class="font-semibold">タグ</dt>
+              <dd><%= @photo_spot.tags %></dd>
+              <dt class="font-semibold">時間帯</dt>
+              <dd>
+                <%= @photo_spot.timestart ? @photo_spot.timestart.strftime("%H:%M") : "未設定" %> 〜
+                <%= @photo_spot.timeend ? @photo_spot.timeend.strftime("%H:%M") : "未設定" %>
+              </dd>
+              <dt class="font-semibold">駐車場</dt>
+              <dd>
+                <% if @photo_spot.parking_flag == 1 %>
+                  駐車場あり
+                  <% if @photo_spot.parking_count %>
+                    ：<%= @photo_spot.parking_count %> 台
+                  <% end %>
+                <% elsif @photo_spot.parking_flag == 0 %>
+                  駐車場なし
+                <% end %>
+              </dd>
+              <dt class="font-semibold">おすすめの季節</dt>
+              <dd>
+                <% case @photo_spot.season %>
+                <% when 'spring' %>
+                  春
+                <% when 'summer' %>
+                  夏
+                <% when 'autumn' %>
+                  秋
+                <% when 'winter' %>
+                  冬
+                <% else %>
+                  未設定
+                <% end %>
+              </dd>
+            </dl>
+          </div>
         </div>
         <div class="flex flex-col sm:flex-row gap-3 mt-4 lg:mt-0">
-          <%= link_to "レビューを投稿", new_photo_spot_review_path(@photo_spot), 
-            class: "inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" %>
+          <%= link_to "レビューを投稿", new_photo_spot_review_path(@photo_spot),
+          class: "inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" %>
         </div>
       </div>
       <% if @photo_spot.images.attached? %>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
           <% @photo_spot.images.limit(6).each_with_index do |image, index| %>
             <div class="relative group aspect-video overflow-hidden rounded-lg shadow-sm cursor-pointer"
-               data-action="click->image-modal#open"
+              data-action="click->image-modal#open"
               data-image-modal-index-value="<%= index %>"
               data-image-modal-images-value="<%= @photo_spot.images.map { |i| url_for(i) }.to_json %>">
               <%= image_tag image.variant(resize_to_fill: [400, 225]),
-                 class: "w-full h-full object-cover group-hover:shadow-md transition-shadow duration-200",
-                 alt: "#{@photo_spot.name}の画像#{index + 1}" %>
+                class: "w-full h-full object-cover group-hover:shadow-md transition-shadow duration-200",
+                alt: "#{@photo_spot.name}の画像#{index + 1}" %>
               <% if index == 5 && @photo_spot.images.count > 6 %>
                 <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                   <span class="text-white text-lg font-semibold">
@@ -94,6 +94,26 @@
       <% end %>
       <div class="prose max-w-none mb-6">
         <p class="text-gray-700 leading-relaxed"><%= simple_format(@photo_spot.detail) %></p>
+      </div>
+    </div>
+    <%# モーダルウィンドウのHTML部分 %>
+    <div data-image-modal-target="modal"
+      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-75 hidden">
+      <div class="relative w-full h-full max-w-5xl">
+        <div class="relative w-full h-full flex items-center justify-center">
+          <img data-image-modal-target="image" class="max-w-full max-h-screen object-contain" alt="Enlarged image">
+          <%# 閉じるボタン %>
+          <button data-action="click->image-modal#close" class="absolute top-4 right-4 text-white text-4xl">
+            &times;
+          </button>
+          <%# 左右の矢印ボタン %>
+          <button data-action="click->image-modal#previous" data-image-modal-target="prevBtn" class="absolute left-4 top-1/2 -translate-y-1/2 text-white text-5xl">
+            &lsaquo;
+          </button>
+          <button data-action="click->image-modal#next" data-image-modal-target="nextBtn" class="absolute right-4 top-1/2 -translate-y-1/2 text-white text-5xl">
+            &rsaquo;
+          </button>
+        </div>
       </div>
     </div>
     <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
@@ -116,17 +136,16 @@
             <p class="text-lg">まだレビューが投稿されていません</p>
             <p class="text-sm mt-2">最初のレビューを投稿してみませんか？</p>
             <div class="mt-4">
-              <%= link_to "最初のレビューを投稿", new_photo_spot_review_path(@photo_spot), 
-                class: "inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" %>
+              <%= link_to "最初のレビューを投稿", new_photo_spot_review_path(@photo_spot),
+              class: "inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700" %>
             </div>
           </div>
         <% end %>
       </div>
     </div>
     <div class="mt-6">
-      <%= link_to "フォトスポット一覧に戻る", photo_spots_path, 
-        class: "inline-flex items-center px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50" %>
+      <%= link_to "フォトスポット一覧に戻る", photo_spots_path,
+      class: "inline-flex items-center px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50" %>
     </div>
   </div>
-</div>
 </div>
